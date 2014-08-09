@@ -16,7 +16,11 @@ document.getElementById('demo').innerHTML="change element by js";
 <body>
 <h1>my web page</h1>
 <p id="demo">demo</p>
-<button type="button" onclick="myfunction()">change</button>
+<button id="mybtn" type="button" onclick="myfunction()">change</button>
+
+<script>
+	document.getElementById("mybtn").onclick=myfunction();
+</script>
 
 </body>
 </html>
