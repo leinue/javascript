@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+<script>
+function a(){
+	document.write(y);
+}
 </script>
+<body>
+
+<button onclick="myFunction()">click</button>
+
 <script>
 function myFunction()
 {
-$("#h01").html("Hello jQuery")
+	y=7;
+    document.write(y);
 }
-$(document).ready(myFunction);
 </script>
-</head>
 
-<body>
-<h1 id="h01"></h1>
 </body>
 </html>
