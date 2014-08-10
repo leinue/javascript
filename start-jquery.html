@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
 <script>
-function a(){
-	document.write(y);
-}
+$(document).ready(function(){
+  $("button").click(function(){
+  $(this).hide();
+});
+});
 </script>
+</head>
+
 <body>
-
-<button onclick="myFunction()">click</button>
-
-<script>
-function myFunction()
-{
-	y=7;
-    document.write(y);
-}
-</script>
-
+<button type="button">click me</button>
 </body>
+
 </html>
