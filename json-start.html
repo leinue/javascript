@@ -7,18 +7,32 @@ Name: <span id="jname"></span><br />
 Age: <span id="jage"></span><br />
 Address: <span id="jstreet"></span><br />
 Phone: <span id="jphone"></span><br />
+
+<button type="button" onclick="loadXMLDoc('http://www.w3school.com.cn/tiy/example/xdom/note.xml')">submit</button>
 </p>
 
 <script type="text/javascript">
-var JSONObject= {
-"name":"Bill Gates",
-"street":"Fifth Avenue New York 666",
-"age":56,
-"phone":"555 1234567"};
-document.getElementById("jname").innerHTML=JSONObject.name
-document.getElementById("jage").innerHTML=JSONObject.age
-document.getElementById("jstreet").innerHTML=JSONObject.street
-document.getElementById("jphone").innerHTML=JSONObject.phone
+var xmlhttp
+function loadXMLDoc(url){
+xmlhttp=null;
+if(window.XMLHttpRequest){
+	xmlhttp=new XMLHttpRequest();
+}elseif(window.ActiveXObject){
+	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+if(xmlhttp!=null){
+	xmlhttp.onreadystatechange=state_Change;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+}
+
+function state_Change(){
+	if(xmlhttp.readystate==4 && xmlhttp.status==200){
+		document.getElementByID('jage').innerHTML=xmlhttp.responseText;
+	}
+}
+
 </script>
 
 </body>
