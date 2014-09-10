@@ -4,7 +4,7 @@
 
 <p>
 Name: <span id="jname"></span><br />
-Age: <span id="jage"></span><br />
+Age: <span id="jagea"></span><br />
 Address: <span id="jstreet"></span><br />
 Phone: <span id="jphone"></span><br />
 
@@ -29,7 +29,7 @@ if(xmlhttp!=null){
 
 function state_Change(){
 	if(xmlhttp.readystate==4 && xmlhttp.status==200){
-		document.getElementByID('jage').innerHTML=xmlhttp.responseText;
+		document.getElementByID('jagea').innerHTML=xmlhttp.responseText;
 	}
 }
 
