@@ -1,0 +1,289 @@
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav in" id="side-menu">
+            <sidebar-search></sidebar-search>
+            <li ui-sref-active="active">
+                <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> 仪表盘</a>
+            </li>
+            <li ui-sref-active="active">
+
+                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> 图表<span></span></a>
+
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="dashboard.table"><i class="fa fa-table fa-fw"></i> 表格</a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> 表单</a>
+            </li>
+            <li ng-class="{active: collapseVar==1}">{{dropDown}}
+                <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> UI元素<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.panels-wells">Panels and Wells</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.buttons">Buttons</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.notifications">Notifications</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.typography">Typography</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.icons"> Icons</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.grid">Grid</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li ng-class="{active:collapseVar==2}">
+                <a href="" ng-click="check(2)"><i class="fa fa-files-o fa-fw"></i> SampleX<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=2">
+                    <li ng-class="{active: selectedMenu=='blank'}">
+                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">空白页</a>
+                    </li>
+                    <li>
+                        <a ui-sref="login">登录页</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            
+            <li ng-class="{active: collapseVar==3}">
+                <a href="" ng-click="check(3)"><i class="fa fa-sitemap fa-fw"></i> 总部后台系统<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=3">
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==1}">
+                        <a href="" ng-click="multiCheck(1)">公司管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=1">
+                            <li>
+                                <a ui-sref="dashboard.staff-mgr">员工管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.supply-mgr">供应商管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.branch-office-mgr">分公司管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.agent-mgr">代理商2.0</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==2}">
+                        <a href="" ng-click="multiCheck(2)">旅游管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=2">
+                            <li>
+                                <a ui-sref="dashboard.route-area-mgr">线路地域管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.route-product-mgr">线路产品管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.travel-order-mgr">旅游订单管理</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==3}">
+                        <a href="" ng-click="multiCheck(3)">百货管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=3">
+                            <li>
+                                <a ui-sref="dashboard.goods-assortment">百货分类</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.points-mall">积分商城</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.vip-prefeature">会员专区</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==4}">
+                        <a href="" ng-click="multiCheck(4)">互动营销 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=4">
+                            <li>
+                                <a ui-sref="dashboard.perimeter-mall">周边商家</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.points-sign-in">积分签到</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.dial-raffle">转盘/抽奖</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.vote">投票竞选模块</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==5}">
+                        <a href="" ng-click="multiCheck(5)">会员管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=5">
+                            <li>
+                                <a ui-sref="dashboard.card-mgr">会员卡管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.profile-mgr">会员资料管理</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.vip-points-mgr">会员积分管理</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==6}">
+                        <a href="" ng-click="multiCheck(6)">统计报表 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=6">
+                            <li>
+                                <a ui-sref="dashboard.agent-statistics">代理商业绩报表及排行</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.supply-statistics">供货商好评及销售额排行</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.shopkeeper-statistics">店长业绩排行</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dashboard.department-statistics">区域部门业绩排行</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li ng-class="{active: collapseVar==4}">
+                <a href="" ng-click="check(4)"><i class="fa fa-credit-card fa-fw"></i> 财务后台系统<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=4">
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==1}">
+                        <a href="" ng-click="multiCheck(1)">财务请款 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=1">
+                            <li>
+                                <a href="">审核及批准</a>
+                            </li>
+                            <li>
+                                <a href="">打款记录</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==2}">
+                        <a href="" ng-click="multiCheck(2)">统计报表 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=2">
+                            <li>
+                                <a href="">线路销售业绩排行</a>
+                            </li>
+                            <li>
+                                <a href="">线路好评度排行</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li ng-class="{active: collapseVar==5}">
+                <a href="" ng-click="check(5)"><i class="fa fa-magnet fa-fw"></i> 供应商后台系统<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=5">
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==1}">
+                        <a href="" ng-click="multiCheck(1)">基本资料 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=1">
+                            <li>
+                                <a href="">申请及认证</a>
+                            </li>
+                            <li>
+                                <a href="">商家资料完善</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==2}">
+                        <a href="" ng-click="multiCheck(2)">旅游管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=2">
+                            <li>
+                                <a href="">线路产品管理</a>
+                            </li>
+                            <li>
+                                <a href="">旅游订单管理</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==3}">
+                        <a href="" ng-click="multiCheck(3)">百货管理 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=3">
+                            <li>
+                                <a href="">百货产品管理</a>
+                            </li>
+                            <li>
+                                <a href="">百货订单管理</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==4}">
+                        <a href="" ng-click="multiCheck(4)">售后反馈 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=4">
+                            <li>
+                                <a href="">客户评价查看</a>
+                            </li>
+                            <li>
+                                <a href="">线路合规审核</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==5}">
+                        <a href="" ng-click="multiCheck(5)">统计报表 <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=5">
+                            <li>
+                                <a href="">线路销售业绩排行</a>
+                            </li>
+                            <li>
+                                <a href="">线路好评度排行</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-third-level -->
+                    </li>
+
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div> 
+
+
+
