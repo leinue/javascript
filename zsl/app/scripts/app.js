@@ -36,7 +36,8 @@ angular
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js',
+                    'scripts/services/services.js'
                     ]
                 }),
                 $ocLazyLoad.load(
@@ -103,7 +104,18 @@ angular
     })
       .state('login',{
         templateUrl:'views/pages/login.html',
-        url:'/login'
+        url:'/login',
+        controller:'UserLoginCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/UserLoginCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
@@ -159,88 +171,530 @@ angular
     // })
       .state('dashboard.staff-mgr',{
         templateUrl:'views/hq/staff-mgr.html',
-        url:'/hq/staff-mgr'
+        url:'/hq/staff-mgr',
+        controller:'StaffMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/StaffMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.supply-mgr',{
         templateUrl:'views/hq/supply-mgr.html',
-        url:'/hq/supply-mgr'
+        url:'/hq/supply-mgr',
+        controller:'SupplyMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/SupplyMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.branch-office-mgr',{
         templateurl:'views/hq/branch-office-mgr.html',
-        url:'/hq/branch-office-mgr'
+        url:'/hq/branch-office-mgr',
+        controller:'BranchOfficeMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/BranchOfficeMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.agent-mgr',{
         templateUrl:'views/hq/agent-mgr.html',
-        url:'/hq/agent-mgr'
+        url:'/hq/agent-mgr',
+        controller:'AgentMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/AgentMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.route-area-mgr',{
         templateUrl:'views/hq/route-area-mgr.html',
-        url:'/hq/route-area-mgr'
+        url:'/hq/route-area-mgr',
+        controller:'RouteAreaMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/RouteAreaMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.route-product-mgr',{
         templateUrl:'views/hq/route-product-mgr.html',
-        url:'/hq/route-product-mgr'
+        url:'/hq/route-product-mgr',
+        controller:'RouteProductMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/RouteProductMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.travel-order-mgr',{
         templateUrl:'views/hq/travel-order-mgr.html',
-        url:'/hq/travel-order-mgr'
+        url:'/hq/travel-order-mgr',
+        controller:'TravelOrderMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/TravelOrderMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.goods-assortment',{
         templateUrl:'views/hq/goods-assortment.html',
-        url:'/hq/goods-assortment'
+        url:'/hq/goods-assortment',
+        controller:'GoodsAssortmentCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/GoodsAssortmentCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.points-mall',{
         templateUrl:'views/hq/points-mall.html',
-        url:'/hq/points-mall'
+        url:'/hq/points-mall',
+        controller:'PointsMall',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/PointsMall.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.vip-prefeature',{
         templateUrl:'views/hq/vip-prefeature.html',
-        url:'/hq/vip-prefeature'
+        url:'/hq/vip-prefeature',
+        controller:'VIPPrefeatureCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/VIPPrefeatureCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.perimeter-mall',{
         templateUrl:'views/hq/perimeter-mall.html',
-        url:'/hq/perimeter-mall'
+        url:'/hq/perimeter-mall',
+        controller:'PerimeterMallCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/PerimeterMallCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.points-sign-in',{
         templateUrl:'views/hq/points-sign-in.html',
-        url:'/hq/points-sign-in'
+        url:'/hq/points-sign-in',
+        controller:'PointsSignInCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/PointsSignInCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.dial-raffle',{
         templateUrl:'views/hq/dial-raffle.html',
-        url:'/hq/dial-raffle'
+        url:'/hq/dial-raffle',
+        controller:'DialRaffleCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/DialRaffleCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.vote',{
         templateUrl:'views/hq/vote.html',
-        url:'/hq/vote'
+        url:'/hq/vote',
+        controller:'VoteCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/VoteCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.card-mgr',{
         templateUrl:'views/hq/card-mgr.html',
-        url:'/hq/card-mgr'
+        url:'/hq/card-mgr',
+        controller:'CardMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/CardMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.profile-mgr',{
         templateUrl:'views/hq/profile-mgr.html',
-        url:'/hq/profile-mgr'
+        url:'/hq/profile-mgr',
+        controller:'ProfileMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/ProfileMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.vip-points-mgr',{
         templateUrl:'views/hq/vip-points-mgr.html',
-        url:'/hq/vip-points-mgr'
+        url:'/hq/vip-points-mgr',
+        controller:'VIPPointsMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/VIPPointsMgrCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.agent-statistics',{
         templateUrl:'views/hq/agent-statistics.html',
-        url:'/hq/agent-statistics'
+        url:'/hq/agent-statistics',
+        controller:'AgentStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/AgentStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.supply-statistics',{
         templateUrl:'views/hq/supply-statistics.html',
-        url:'/hq/supply-statistics'
+        url:'/hq/supply-statistics',
+        controller:'SupplyStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/SupplyStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.shopkeeper-statistics',{
         templateUrl:'views/hq/shopkeeper-statistics.html',
-        url:'/hq/shopkeeper-statistics'
+        url:'/hq/shopkeeper-statistics',
+        controller:'ShopkeeperStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/ShopkeeperStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.department-statistics',{
         templateUrl:'views/hq/department-statistics.html',
-        url:'/hq/department-statistics'
+        url:'/hq/department-statistics',
+        controller:'DepartmentStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/hq/DepartmentStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
     })
+      .state('dashboard.finance-verify',{
+        templateUrl:'views/finance/finance-verify.html',
+        url:'/finance/finance-verify',
+        controller:'FinanceVerifyCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/finance/FinanceVerifyCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.finance-record',{
+        templateUrl:'views/finance/finance-record.html',
+        url:'/finance/finance-record',
+        controller:'FinanceRecordCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/finance/FinanceRecordCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.finance-route-statistics',{
+        templateUrl:'views/finance/finance-route-statistics.html',
+        url:'/finance/finance-route-statistics',
+        controller:'FinanceRouteStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/finance/FinanceRouteStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.finance-route-credit-statistics',{
+        templateUrl:'views/finance/finance-route-credit-statistics.html',
+        url:'/finance/finance-route-credit-statistics',
+        controller:'FinanceRouteCreditStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/finance/FinanceRouteCreditStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-verify',{
+        templateUrl:'views/supply/supply-verify.html',
+        url:'/supply/supply-verify',
+        controller:'SupplyVerifyCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyVerifyCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-profile',{
+        templateUrl:'views/supply/supply-profile.html',
+        url:'/supply/supply-profile',
+        controller:'SupplyProfileCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyProfileCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-route-mgr',{
+        templateUrl:'views/supply/supply-route-mgr.html',
+        url:'/supply/supply-route-mgr',
+        controller:'SupplyRouteMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyRouteMgrCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-travel-order-mgr',{
+        templateUrl:'views/supply/supply-travel-order-mgr.html',
+        url:'/supply/supply-travel-order-mgr',
+        controller:'SupplyTravelOrderMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyTravelOrderMgrCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-goods-mgr',{
+        templateUrl:'views/supply/supply-goods-mgr.html',
+        url:'/supply/supply-goods-mgr',
+        controller:'SupplyGoodsMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyGoodsMgrCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-goods-order-mgr',{
+        templateUrl:'views/supply/supply-goods-order-mgr.html',
+        url:'/supply/supply-goods-order-mgr',
+        controller:'SupplyGoodsOrderMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyGoodsOrderMgrCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-comments-mgr',{
+        templateUrl:'views/supply/supply-comments-mgr.html',
+        url:'/supply/supply-comments-mgr',
+        controller:'SupplyCommentsMgrCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyCommentsMgrCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-travel-verify',{
+        templateUrl:'views/supply/supply-travel-verify.html',
+        url:'/supply/supply-travel-verify',
+        controller:'SupplyTravelVerifyCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyTravelVerifyCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-travel-statistics',{
+        templateUrl:'views/supply/supply-travel-statistics.html',
+        url:'/supply/supply-travel-statistics',
+        controller:'SupplyTravelStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyTravelStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+      .state('dashboard.supply-travel-credit-statistics',{
+        templateUrl:'views/supply/supply-travel-credit-statistics.html',
+        url:'/supply/supply-travel-credit-statistics',
+        controller:'SupplyTravelCreditStatisticsCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/supply/SupplyTravelCreditStatisticsCtrl.js'
+              ]
+            })
+          }
+        }
+    })
+
   }]);
 
     
