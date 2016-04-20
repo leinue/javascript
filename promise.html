@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>promise test</title>
+</head>
+<body>
+
+</body>
+
+<!-- <script src="promise.js"></script> -->
+
+<script type="text/javascript">
+	
+	var lnglat = [[0,0], [2,1], [0,0],  [2,1], [1,2], [3,4]];
+
+	var isEleInArrayExpectIndex  = function(ele, arr, index) {
+
+		for (var i = 0; i < arr.length; i++) {
+			var curr = arr[i];
+
+			if(index === i) {
+				continue;
+			}
+
+			if(ele[0] === curr[0] && ele[1] === curr[1]) {
+				return true;
+			}
+		};
+
+		return false;
+
+	};
+
+	var isInRepeatList = function(ele, arr) {
+		for (var i = 0; i < arr.length; i++) {
+			var curr = arr[i];
+			if(ele[0] === curr.lnglat[0] && ele[1] === curr.lnglat[1]) {
+				return true;
+			}
+		};
+		return false;
+	};
+
+	var countRepeat = function(arr) {
+
+		var result = [];
+		var tmp = {};
+
+		for (var i = 0; i < arr.length; i++) {
+			var curr = arr[i];
+			var isIn = isEleInArrayExpectIndex(curr, arr, i);
+
+			if(isIn) {
+
+				var flag = false;
+				var index = null;
+
+				for (var j = 0; j < result.length; j++) {
+					var currArrEle = result[j];
+					if(currArrEle.lnglat[0] === curr[0] && currArrEle.lnglat[1] === curr[1]) {
+						flag = true;
+						index = j;
+					}else {
+						flag = false;
+					}
+				};
+
+				if(!flag) {
+					var isInRL = isInRepeatList(curr, result);
+					if(isInRL) {
+						result[index].count = result[index].count + 1;						
+					}else {
+						tmp.lnglat = curr;
+						tmp.count = 1;
+						result.push(tmp);						
+					}
+				}else {
+					if(typeof result[index] != 'undefined') {
+						result[index].count = result[index].count + 1;						
+					}
+				}
+			}
+			tmp = {};
+		};
+
+		return result;
+	};
+
+	var repeat = countRepeat(lnglat);
+	console.log(repeat);
+
+</script>
+</html>

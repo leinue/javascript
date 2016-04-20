@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>event test</title>
+</head>
+<body>
+
+<div id="test">
+	
+</div>
+
+<script type="text/javascript">
+
+	for(var key in document) {
+
+		if(key.substring(0, 2) == 'on') {
+
+			// console.log(key);
+
+		}
+
+	}
+
+	var test = document.getElementById('test');
+
+
+	for(var key in test) {
+
+		console.log(key);
+
+	}
+
+
+</script>
+
+</body>
+</html>

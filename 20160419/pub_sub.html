@@ -1,0 +1,49 @@
+
+<script type="text/javascript">
+
+var events = {
+
+	evts: {},
+
+	pub: function(evt, callback) {
+
+		//先执行发布消息的回调函数
+		callback();
+
+		//再执行监听段的回调函数
+		for (var i = 0; i < this.evts[evt].length; i++) {
+			var curr = this.evts[evt][i];
+			curr();
+		};
+	},
+
+	sub: function(evt, callback) {
+		//如果当前监听的事件在事件列表中是第一次定义，则初始化当前事件列表回调函数为空数组
+		if(this.evts[evt] == undefined) {
+			this.evts[evt] = [];
+		}
+
+		this.evts[evt].push(callback);
+
+	}
+}
+
+//第一次监听消息
+events.sub('run', function() {
+	console.log('just run');
+});
+
+//第二次监听消息
+events.sub('run', function() {
+	console.log('just run 2');
+});
+
+events.pub('run', function() {
+	console.log('publish');
+});//发布消息
+
+events.pub('run', function() {
+	console.log('publish 2');
+});
+
+</script>
