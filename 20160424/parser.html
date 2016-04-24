@@ -6,7 +6,145 @@
 </head>
 <body>
 
+<script type="text/javascript">
 
+　　 String.prototype.trim=function(){
+　　    return this.replace(/(^\s*)|(\s*$)/g, "");
+　　 }
+
+　　 String.prototype.ltrim=function(){
+　　    return this.replace(/(^\s*)/g,"");
+　　 }
+
+　　 String.prototype.rtrim=function(){
+　　    return this.replace(/(\s*$)/g,"");
+　　 }
+
+	var lexer = {
+
+		tokens: {//token列表
+
+			EOI: 0,
+			SEMI: 1,
+			PLUS: 2,
+			MINUS: 7,
+			TIMES: 3,
+			DIV: 8,
+			LP: 4,
+			RP: 5,
+			NUM_OR_ID: 6,
+
+		},
+
+		lookAhead: -1,//字符类型
+
+		input_buffer: '',//表达式缓冲区
+		current: '',//当前字符
+
+		readLength: 0,//当前读取字符的个数
+
+		run: function(stat) {
+
+			this.input_buffer = stat;
+
+			console.log('接收解析语句：' + this.input_buffer);
+
+			console.log('解析结果如下：');
+
+			while(!this.advance(this.tokens.EOI)) {
+				console.log('Token: ' + this.token() + ', Symbol: ' + this.current);
+			}
+
+		},
+
+		lex: function() {
+
+			var self = this;
+
+			this.readLength++;
+
+			if(this.input_buffer.length === 0) {
+				return this.tokens.EOI;
+			}
+
+			this.input_buffer.trim();
+
+			for (var i = 0; i < this.input_buffer.length; i++) {
+
+				self.current = this.input_buffer[i];
+
+				this.input_buffer = this.input_buffer.substring(1);
+
+				switch(self.current) {
+					case '+':
+						return this.tokens.PLUS;
+						break;
+					case '-':
+						return this.tokens.MINUS;
+						break;
+					case '*':
+						return this.tokens.TIMES;
+						break;
+					case '(':
+						return this.tokens.LP;
+						break;
+					case ')':
+						return this.tokens.RP;
+						break;
+					case '/':
+						return this.tokens.DIV;
+						break;
+					default:
+
+						//若不是上述token，只能是其它字符了
+
+						if(!this.isNum()) {
+							throw 'illegal character on position ' + this.readLength + ': "' + self.current + '"';
+						}
+
+						return this.tokens.NUM_OR_ID;
+						break;
+				}
+			};
+
+		},
+
+		isNum: function(c) {
+
+			c = c || this.current;
+
+			return !isNaN(c);
+
+		},
+
+		token: function() {
+
+			var token = '';
+
+			for(var key in this.tokens) {
+
+				if(this.tokens[key] === this.lookAhead) {
+					token = key;
+				}
+
+			}
+
+			return token;
+		},
+
+		advance: function(token) {
+			if(this.lookAhead = -1) {
+				this.lookAhead = this.lex();
+			}
+
+			return this.lookAhead == token;
+		}
+
+	};
+
+	lexer.run('1+2*(3+4)-5/4');
+
+</script>
 
 </body>
 </html>
