@@ -50,6 +50,10 @@
 
 		},
 
+		log: function() {
+			console.log(this.input_buffer);
+		},
+
 		run: function() {
 
 			// console.log('接收解析语句：' + this.input_buffer);
@@ -163,7 +167,6 @@
 
 	    	if(!lexer.match(lexer.tokens.EOI)) {
 	    		lexer.advance();
-	    		// this.statements();
 	    	}
 
 	    	if(!this.isLegal) {
@@ -242,7 +245,7 @@
 				}
 
 			}else {
-				console.log(lexer);
+				// console.log(lexer);
 				this.isLegal = false;
 				throw 'invalid expression on position ' + lexer.readLength;
 				return;
@@ -252,7 +255,8 @@
 
 	};
 
-	lexer.init('1+2*(3+4)+5*6');
+	lexer.init('+1+2*(3+4)+5*6');
+	lexer.log();
 	parser.statements();
 
 </script>
