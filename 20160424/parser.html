@@ -157,13 +157,45 @@
 
 		isLegal: true,
 
+		registers: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+		registersPoint: 0,
+
+		newRegister: function() {
+
+			if(this.registersPoint >= this.registers.length) {
+				throw 'statements too complex';
+			}
+
+			var regName = this.registers[this.registersPoint];
+			this.registersPoint++;
+
+			return regName;
+
+		},
+
+		freeRegister: function(reg) {
+
+			if(this.registersPoint > 0) {
+
+				this.registers[this.registersPoint] = reg;
+				// console.log(this.registersPoint);
+				this.registersPoint--;
+
+			}else {
+				throw 'name stack overflow';
+			}
+
+		},
+
 		statements: function() {
 
 	    	/*
 	    	 * statements -> expression ; | expression ; statements
 	    	 */
 
-	    	this.expression();
+	    	var reg = this.newRegister();
+
+	    	this.expression(reg);
 
 	    	if(!lexer.match(lexer.tokens.EOI)) {
 	    		lexer.advance();
@@ -177,20 +209,25 @@
 
 		},
 
-		expression: function() {
+		expression: function(reg) {
 
-			this.term();
-			this.expr_prime();
+			this.term(reg);
+			this.expr_prime(reg);
 
 		},
 
-		expr_prime: function() {
+		expr_prime: function(reg) {
 
 			if(lexer.match(lexer.tokens.PLUS)) {
 
 				lexer.advance();
-				this.term();
-				this.expr_prime();
+
+				var newReg = this.newRegister();
+				this.term(newReg);
+				this.expr_prime(reg);
+
+	    		console.log(reg + " += " + newReg);
+	    		this.freeRegister(reg);
 
 			}else if(lexer.match(lexer.tokens.UNKNOWN_SYMBOL)) {
 				this.isLegal = false;
@@ -202,20 +239,26 @@
 
 		},
 
-		term: function() {
+		term: function(reg) {
 
-			this.factor();
-			this.term_prime();
+			this.factor(reg);
+			this.term_prime(reg);
 
 		},
 
-		term_prime: function() {
+		term_prime: function(reg) {
 
 			if(lexer.match(lexer.tokens.TIMES)) {
 
 				lexer.advance();
-				this.factor();
-				this.term_prime();
+
+				var newReg = this.newRegister();
+
+				this.factor(newReg);
+				this.term_prime(reg);
+
+	    		console.log(reg + " *= " + newReg);
+	    		this.freeRegister(reg);
 
 			}else {
 				return;
@@ -223,16 +266,17 @@
 
 		},
 
-		factor: function() {
+		factor: function(reg) {
 
 			if(lexer.match(lexer.tokens.NUM_OR_ID)) {
 
+	    		console.log(reg + " = " + lexer.current);
 				lexer.advance();
 
 			}else if(lexer.match(lexer.tokens.LP)) {
 
 				lexer.advance();
-				this.expression();
+				this.expression(reg);
 
 				if(lexer.match(lexer.tokens.RP)) {
 					lexer.advance();
@@ -255,7 +299,7 @@
 
 	};
 
-	lexer.init('+1+2*(3+4)+5*6');
+	lexer.init('1*2+3*4+5*6');
 	lexer.log();
 	parser.statements();
 
