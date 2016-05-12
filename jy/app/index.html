@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>在线教育</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+    
+    <div class="content-block">
+        <p>左面板</p>
+      </div>
+    </div>
+    <!-- Right panel with cover effect-->
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>右面板</p>
+      </div>
+    </div>
+
+    <div class="popup popup-services">
+      <!-- <div class="content-block"> -->
+      <div class="navbar">
+        <div class="navbar-inner">
+          <!-- We have home navbar without left link-->
+          <div class="left"><a href="#" class="link close-popup"> <i class="icon icon-back"></i><span>返回</span></a></div>
+          <div class="center">课程类别</div>
+          <div class="right">
+            <!-- Right link contains only icon - additional "icon-only" class-->
+            <a href="#"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-block class-catagory" style="margin-top:0">
+        <ul>
+          <li>
+            <a href="classes/category_list.html" class="item-link item-content close-popup">
+              <div class="item-inner">
+                <div class="item-title">销售管理</div>
+                <div class="item-after">关于销售的课程</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="classes/category_list.html" class="item-link item-content close-popup">
+              <div class="item-inner">
+                <div class="item-title">人力资源</div>
+                <div class="item-after">关于hr的课程</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="classes/category_list.html" class="item-link item-content close-popup">
+              <div class="item-inner">
+                <div class="item-title">领导力</div>
+                <div class="item-after">关于领导力的课程</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views tabs toolbar-through">
+      <!-- Your first view, it is also a .tab and should have "active" class to make it visible by default-->
+      <div id="subjects" class="view view-main tab active">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left">
+              <!-- <a href="#" data-popup=".popup-services" class="item-link open-popup"> <i class="icon icon-bars"></i></a> -->
+            </div>
+            <!-- We have home navbar without left link-->
+            <div class="center sliding">所有课程</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class-->
+<!--               <a href="#" class="link icon-only open-login-screen"> <i class="icon icon-next"></i></a>-->              
+              <a href="#" data-popup=".popup-services" class="item-link open-popup"> <i class="icon icon-bars"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pages-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="subjects" class="page">
+
+
+
+          <!-- Search bar -->
+          <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+            <div class="searchbar-input">
+              <input type="search" placeholder="搜索"><a href="#" class="searchbar-clear"></a>
+            </div><a href="#" class="searchbar-cancel">取消</a>
+          </form>
+         
+          <!-- Search bar overlay -->
+          <div class="searchbar-overlay"></div>
+
+            <!-- Scrollable page content-->
+            <div class="page-content">
+
+              <div class="content-block-title">课程推荐</div>
+              <div class="swiper-container swiper-slow">
+                <div class="swiper-pagination"></div>
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide"><span>推荐课程1</span></div>
+                  <div class="swiper-slide"><span>推荐课程2</span></div>
+                  <div class="swiper-slide"><span>推荐课程3</span></div>
+                </div>
+              </div>
+
+              <div class="content-block-title">销售管理</div>
+              <div class="list-block media-list list-block-search">
+                <ul>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">电话的销售</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">互联网销售</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">渠道销售</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="content-block-title">人力资源</div>
+              <div class="list-block media-list">
+                <ul>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">招聘管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">员工关系管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">绩效管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="content-block-title">领导力</div>
+              <div class="list-block media-list">
+                <ul>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">自我管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">团队管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">目标管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="content-block-title">财务管理</div>
+              <div class="list-block media-list">
+                <ul>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">税务管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">成本管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="class.html" class="item-link item-content">
+                      <div class="item-media"><img src="..." width="80"></div>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">预算管理</div>
+                          <div class="item-after">$15</div>
+                        </div>
+                        <div class="item-subtitle">朱老师</div>
+                        <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> -->
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second view (for second wrap)-->
+      <div id="profile" class="view tab">
+        <!-- We can make with view with navigation, let's add Top Navbar-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="center sliding">我的课程</div>
+          </div>
+        </div>
+
+        <div class="pages navbar-through">
+          <div data-page="profile" class="page">
+            <div class="page-content">
+
+              <div class="content-block-title">登录/注册</div>
+              <div class="list-block">
+                <ul>
+                  <!-- <li><a href="#" class="item-link list-button open-login-screen">登录</a></li> -->
+                  <li><a href="login.html" class="item-link list-button">登录</a></li>
+                  <!-- <li><a href="register.html" data-popup=".popup-register" class="item-link list-button open-popup">注册</a></li> -->
+                  <li><a href="register.html" class="item-link list-button">注册</a></li>
+                </ul>
+              </div>
+
+              <div class="content-block-title">个人信息</div>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <a href="myprofile.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner"> 
+                          <div class="item-title">我的资料</div>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <button style="outline: 0px none;background: rgb(255, 255, 255) none repeat scroll 0% 0%;cursor:pointer;border: 0px none;width: 100%;padding-right: 0px;" class="item-link" onclick="pathto('myclasses.html')">
+                      <div class="item-content" style="padding-left: 5px;">
+                        <div class="item-inner"> 
+                          <div class="item-title" style="font-size: 17px;">我的课程</div>
+                        </div>
+                      </div>
+                    </button>
+                    <a href="http://ivydom.com" class="item-link"></a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="content-block-title">系统相关</div>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <a href="#" id="btn-logout" class="item-link list-button">退出系统</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Tabbar-->
+      <div class="toolbar tabbar tabbar-labels">
+        <div class="toolbar-inner">
+          <a href="#subjects" class="tab-link active"> <i class="icon tabbar-demo-icon-1"></i><span class="tabbar-label">课程</span></a>
+          <a href="#profile" class="tab-link"><i class="icon tabbar-demo-icon-2"></i><span class="tabbar-label">我的</span></a>
+          <!-- <a href="#view-4" class="tab-link"> <i class="icon tabbar-demo-icon-4"></i><span class="tabbar-label">Photos</span></a></div> -->
+        </div>
+      </div>
+
+      <script type="text/javascript">
+
+
+       var pathto = function(href) {
+        window.location.href = href;
+       }
+
+      </script>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/my-app.js"></script>
+  </body>
+</html>
