@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="" ng-init="quantity=1;price=5">
+
+	<h2>价格计算器</h2>
+
+	数量： <input type="number" ng-model="quantity">
+	价格： <input type="number" ng-model="price">
+
+	<p><b>总价：</b> {{ quantity * price }}</p>
+
+	<div ng-app="" ng-init="names=['Jani','Hege','Kai']">
+	  <p>使用 ng-repeat 来循环数组</p>
+	  <ul>
+	    <li ng-repeat="x in names">
+	      {{ x }}
+	    </li>
+	  </ul>
+	</div>
+
+</div>
+
+</body>
+</html>
