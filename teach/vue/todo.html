@@ -7,7 +7,7 @@
 <body>
 
 <div id="app">
-  <input v-model="newTodo" v-on:keyup.enter="addTodo">
+  <input v-model="newTodo" @keyup.enter="addTodo">
   <ul>
     <li v-for="todo in todos">
       <span>{{ todo.text }}</span>

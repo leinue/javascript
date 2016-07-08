@@ -11,17 +11,29 @@
 <select ng-model="selectedName" ng-change="slectorChanged(selectedName)" ng-options="x for x in names">
 </select>
 
+<input ng-disabled="false" ng-hide="true" />
+
 </div>
 
 <script>
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
+app.controller('myCtrl', function($scope, a, b, c) {
     $scope.names = ["腾讯", "阿里", "百度"];
 
     $scope.slectorChanged = function(change) {
     	console.log(change);
     }
 
+    console.log(a, b);
+    c();
+
+});
+
+app.value('a', 'sss');
+app.constant('b', 'ssss');
+
+app.provider('c', function() {
+	console.log('hello provider');
 });
 </script>
 

@@ -12,16 +12,91 @@
 姓: <input type="text" ng-model="lastName"><br>
 <br>
 姓名: {{fullName()}}
+
+{{fullname}}
+
+<div ng-controller="second">
+	
+
+<h1>第二控制器</h1>
+
+controlller:{{fullname()}}
+
+{{fullname | plus}}
+
+</div>
+
 </div>
 
 <script>
 var app = angular.module('myApp', []);
-app.controller('personCtrl', function($scope) {
+app.controller('personCtrl', function($scope, $rootScope) {
     $scope.firstName = "John";
     $scope.lastName = "Doe";
     $scope.fullName = function() {
         return $scope.firstName + " " + $scope.lastName;
-    }
+    };
+
+    $rootScope.fullname = 'yunduan';
+
+});
+
+app.controller('second', function($scope, $location, $timeout, $interval, test) {
+
+	$scope.name = 'dddd';
+
+	$scope.fullname1 = function () {
+		return 'sssss';
+	}
+
+	console.log($location);
+
+	// setTimeout();//延迟执行，间隔
+	// setInterval();//循环执行，有个间隔
+
+	// setTimeout(function() {
+
+	// }, 1000);
+
+	// setInterval(function() {
+
+	// }, 2000);
+
+	// $timeout(function() {
+
+	// }, 1000);
+
+	// $interval(function() {
+
+	// }, 2000);
+
+	test.test();
+	console.log(test.arr);
+
+});
+
+app.service('test', function($http) {
+
+	console.log('hello world');
+
+	return {
+		test: function() {
+			console.log('hello test');
+		},
+
+		arr: ['1', '2']
+	}
+
+	return $http.get('sdfghj');
+
+});
+
+app.filter('plus', function() {
+
+	return function(input) {
+		return input + '=========';
+	}
+
 });
 </script>
 
