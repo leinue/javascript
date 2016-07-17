@@ -174,19 +174,16 @@
 				var attrs = childNode.attributes;
 				attrs = Array.prototype.slice.call(attrs);
 
-				var evtObj = [];
-
 				for (var j = 0; j < attrs.length; j++) {
 					var attr = attrs[j];
 
 					if(this._evts.indexOf(attr.name) != -1) {
 
-						evtObj.push({
-							name: attr.name,
-							value: attr.value
-						});
-
-						childNode.addEventListener(attr.name.split('-')[1], this._methods[attr.value], false);
+						if(this.isMethodInList(attr.value)) {
+							childNode.addEventListener(attr.name.split('-')[1], this._methods[attr.value], false);
+						}else {
+							throw 'method: ' + attr.value + ' is not defined';
+						}
 
 					}
 				};
@@ -204,6 +201,16 @@
 					this._evts.push(key);
 				}
 			}
+		};
+
+		dataBinding.prototype.isMethodInList = function(val) {
+			var flag = false;
+			for(var fnName in this._methods) {
+				if(fnName == val) {
+					flag = true;
+				}
+			}
+			return flag;
 		}
 
 
@@ -230,6 +237,10 @@
 				fun: function() {
 					console.log('test');
 					console.log(this);
+				},
+
+				fun2: function() {
+					console.log('dbclick');
 				}
 			}
 		});
