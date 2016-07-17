@@ -6,10 +6,11 @@
 <body>
 
 	<div id="binding">
-		{{name}}
+		<p>{{name}}</p>
 		{{sex}}
 		<br>
 		{{haha}}
+		<button click="fun">method test</button>
 	</div>
 
 	<script type="text/javascript">
@@ -19,15 +20,17 @@
 			this._el = obj.id || ''; 
 			this._ready = obj.ready || function()｛};
 			this._data = obj.data || {};
+			this._methods = obj.methods || {};
 
 			this.dom = {};
 			this.init = {};
 
 			this.dom._context = document.getElementById(this._el);
+
 			var variable = this.getVariable();
 			this.renderStart(variable);
 
-			this.arr = [1, 2, 3];
+			this.analyseMethods();
 
 			return this;
 		}
@@ -60,8 +63,6 @@
 			for (var i = 0; i < this.dom.innerHTML.length; i++) {
 				this.dom.newerInnerHTML += this.dom.innerHTML[i];					
 			};
-
-			console.log(dom, this.dom.newerInnerHTML);
 
 			for (var i = 0; i < dom.length; i++) {
 
@@ -157,11 +158,54 @@
 
 			return -1;
 
-		}
+		};
+
+		dataBinding.prototype.analyseMethods = function() {
+
+			var cxt = this.dom._context;
+
+			var eventsList = ['click'];
+
+			var nodeList = cxt.children;
+
+			for (var i = 0; i < nodeList.length; i++) {
+				var childNode = nodeList[i];
+
+				var attrs = childNode.attributes;
+				attrs = Array.prototype.slice.call(attrs);
+
+				for (var j = 0; j < attrs.length; j++) {
+					var attr = attrs[j];
+					var evtObj = [];
+
+					if(eventsList.indexOf(attr.name) != -1) {
+
+						evtObj.push({
+							name: attr.name,
+							value: attr.value
+						});
+
+					}
+				};
+
+				// if(!attrs) {
+				// 	continue;
+				// }
+
+				// for (var i = 0; i < attrs.length; i++) {
+				// 	var attr = attrs[i];
+				// 	var isEvent = eventsList.indexOf(attr);
+				// 	console.log(isEvent);
+				// };
+
+			};
+
+		};
 
 
 		var db = new dataBinding({
 			id: 'binding',
+
 			data: {
 				name: 'test',
 				sex: 'you',
@@ -176,6 +220,12 @@
 
 				this.name = "my data binding";
 
+			},
+
+			methods: {
+				fun: function() {
+
+				}
 			}
 		});
 
