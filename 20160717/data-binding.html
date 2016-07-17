@@ -10,7 +10,7 @@
 		{{sex}}
 		<br>
 		{{haha}}
-		<button click="fun">method test</button>
+		<button upon-click="fun">method test</button>
 	</div>
 
 	<script type="text/javascript">
@@ -164,7 +164,7 @@
 
 			var cxt = this.dom._context;
 
-			var eventsList = ['click'];
+			this.getAllEvts();
 
 			var nodeList = cxt.children;
 
@@ -174,33 +174,37 @@
 				var attrs = childNode.attributes;
 				attrs = Array.prototype.slice.call(attrs);
 
+				var evtObj = [];
+
 				for (var j = 0; j < attrs.length; j++) {
 					var attr = attrs[j];
-					var evtObj = [];
 
-					if(eventsList.indexOf(attr.name) != -1) {
+					if(this._evts.indexOf(attr.name) != -1) {
 
 						evtObj.push({
 							name: attr.name,
 							value: attr.value
 						});
 
+						childNode.addEventListener(attr.name.split('-')[1], this._methods[attr.value], false);
+
 					}
 				};
-
-				// if(!attrs) {
-				// 	continue;
-				// }
-
-				// for (var i = 0; i < attrs.length; i++) {
-				// 	var attr = attrs[i];
-				// 	var isEvent = eventsList.indexOf(attr);
-				// 	console.log(isEvent);
-				// };
 
 			};
 
 		};
+
+		dataBinding.prototype.getAllEvts = function() {
+			this._evts = [];
+
+			for (var key in document) {
+				if(key.indexOf('on') === 0) {
+					key = key.replace('on', 'upon-');
+					this._evts.push(key);
+				}
+			}
+		}
 
 
 		var db = new dataBinding({
@@ -224,7 +228,8 @@
 
 			methods: {
 				fun: function() {
-
+					console.log('test');
+					console.log(this);
 				}
 			}
 		});
