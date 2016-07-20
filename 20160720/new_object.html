@@ -1,0 +1,68 @@
+<script type="text/javascript">
+	
+	function myObject () {
+		this.constructor = null;
+	}
+
+	var obj  = new myObject();
+	for(var n in obj) {
+		console.log(obj);
+	}
+
+	var extend = function(subClass, baseClass) {
+
+		subClass.baseConstructor = baseClass;
+		subClass.base = {};
+
+		baseClass.call(subClass.base);
+
+	}
+
+	function Mouse() {}
+
+	function Animal(name) {
+		this.name = name;
+
+		this.say = function(message) {
+			console.log(this.name + ': ' + message);
+		}
+
+		this.eat = function() {
+			this.say('yummy');
+		}
+
+	}
+
+	function Cat() {
+		Cat.baseConstructor.call(this, 'cat');
+
+		this.eat = function(food) {
+
+			if(food instanceof Mouse) {
+				Cat.base.eat.call(this);
+			}else {
+				this.say('yuk i only eat mice not ' + food.name);
+			}
+
+		}
+	}
+
+	extend(Cat, Animal);
+
+	function Lion() {
+		Lion.baseConstructor.call(this, 'lion');
+	}
+
+	extend(Lion, Cat);
+
+	var cat = new Cat();
+	var lion = new Lion();
+	var mouse = new Mouse();
+
+	var unknownObj = {};
+
+	cat.eat(mouse);
+	cat.eat(unknownObj);
+	lion.eat(cat);
+
+</script>
