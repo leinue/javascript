@@ -1,0 +1,38 @@
+<script type="text/javascript">
+	
+	var add = function(x, y) {
+		return x + y;
+	}
+
+	var mul = function(x, y) {
+		return x * y;
+	}
+
+	var calc = function(isAdd, x, y) {
+		if(isAdd) {
+			return add(x, y);
+		}else {
+			return mul(x, y);
+		}
+	}
+
+	var r = calc(true, 1, 2);
+	console.log(r);
+
+	//函数式声明1
+
+	r = true ? add(1, 2) : mul(1, 2);
+	console.log(r);
+
+	//函数式声明2
+
+	r = (true ? add : mul)(1, 2);
+	console.log(r);
+
+	(function(v) {
+
+		console.log(arguments);
+
+	})(1);
+
+</script>
