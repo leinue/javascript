@@ -1,0 +1,14 @@
+<script type="text/javascript">
+		
+	// console.log(alert);
+
+	var a = alert;
+
+	alert = function(aaa) {
+		console.log(aaa);
+		a(aaa);
+	}
+
+	alert('sss');
+
+</script>
