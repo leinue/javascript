@@ -29,10 +29,10 @@
 	r = (true ? add : mul)(1, 2);
 	console.log(r);
 
-	(function(v) {
-
-		console.log(arguments);
-
+	(function(v, v2) {
+		console.log(arguments);//['v', 'v2']
 	})(1);
+
+	//
 
 </script>
