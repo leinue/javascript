@@ -650,9 +650,15 @@
 				}]//拟声词
 			};
 
+			this.wordTypeTable = {
+				DisyllabicMorphemes: '双音节语素',
+				PolysyllabicMorphemes: '多音节语素',
+				notionalWordList: '实词',
+				conjList: '虚词'
+			}
+
 			this.sentence = sentence;
 			this.wordsList = [];
-
 		}
 
 		chineseLanguageProcessing.prototype = {
@@ -681,7 +687,11 @@
 			},
 
 			handleWordStack: function() {
-				this.handleSingleWord(this.wordStack.join(''));
+				return this.handleSingleWord(this.wordStack.join(''));
+			},
+
+			packWordsList: function(result, word) {
+				this.wordsList.push(result);
 			},
 
 			process: function() {
@@ -692,7 +702,7 @@
 					var word = this.sentence[i];
 					result = self.handleSingleWord(word);
 
-					if(!result) {
+					if(typeof result == 'strings') {
 						//判断下一个字符是否在数据结构内
 						self.wordStack.push(word);
 
@@ -700,15 +710,16 @@
 							continue;
 						}
 
-						console.log('continue', this.sentence[i + 1]);
-
 						result = self.handleSingleWord(this.sentence[i + 1]);
+
 						//如果下一个字符也不存在就连着上一个字符进行查找
-						if(!result) {
-							self.wordStack.push(word);
+						if(typeof result == 'string') {
+							// console.log('process 3', self.wordStack, word);
 							result = self.handleWordStack();
-							if(!result) {
+							console.log('process result 3＝＝＝＝＝＝＝＝＝＝', result);
+							if(typeof result == 'string') {
 								//没找到，继续找
+								console.log('not found', self.word);
 							}else {
 								//如果找到了 就清空
 								self.wordStack = [];
@@ -723,10 +734,6 @@
 				};
 
 				return self.wordsList;
-			},
-
-			packWordsList: function(result, word) {
-				this.wordsList.push(result);
 			},
 
 			handleMonosyllabicMorphemes: function() {
@@ -752,13 +759,6 @@
 			handleWordType: function(type, wordType) {
 				var self = this;
 
-				var wordTypeTable = {
-					DisyllabicMorphemes: '双音节语素',
-					PolysyllabicMorphemes: '多音节语素',
-					notionalWordList: '实词',
-					conjList: '虚词'
-				}
-
 				for (var i = 0; i < type.length; i++) {
 					var dm = type[i],
 						dmWords = dm.words;
@@ -769,7 +769,7 @@
 							return {
 								type: {
 									en: wordType,
-									cn: wordTypeTable[wordType]
+									cn: self.wordTypeTable[wordType]
 								},
 								word: dmWord,
 								wordType: dm.type
@@ -781,14 +781,6 @@
 				return self.word;
 			},
 
-			handleDisyllabicMorphemes: function() {
-				return this.handleWordType(this['DisyllabicMorphemes'], 'DisyllabicMorphemes');
-			},
-
-			handlePolysyllabicMorphemes: function() {
-				return this.handleWordType(this['PolysyllabicMorphemes'], 'PolysyllabicMorphemes');
-			},
-
 			handleMultiWordType: function(type) {
 				for(var key in this[type]) {
 					var result = this.handleWordType(this[type][key], type);
@@ -796,7 +788,15 @@
 						return result;
 					}
 				}
-				return '';				
+				return this.word;				
+			},
+
+			handleDisyllabicMorphemes: function() {
+				return this.handleWordType(this['DisyllabicMorphemes'], 'DisyllabicMorphemes');
+			},
+
+			handlePolysyllabicMorphemes: function() {
+				return this.handleWordType(this['PolysyllabicMorphemes'], 'PolysyllabicMorphemes');
 			},
 
 			handleNotionalWordList: function() {
@@ -809,7 +809,7 @@
 
 		}
 
-		var clp = new chineseLanguageProcessing('从容土人生水喜马拉雅乒乓跑唱太'),
+		var clp = new chineseLanguageProcessing('土人生水跑高太'),
 			word = clp.process();
 
 		console.log(word);
