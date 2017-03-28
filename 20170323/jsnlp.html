@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js nlp</title>
+</head>
+<body>
+
+
+
+	<script type="text/javascript">
+
+		var chineseLanguageProcessing = function(sentence) {
+
+			this.MonosyllabicMorphemes = [{
+				id: 0,
+				word: '土'
+			}, {
+				id: 1,
+				word: '人'
+			}, {
+				id: 2,
+				word: '水'
+			}, {
+				id: 3,
+				word: '风'
+			}];
+
+			this.DisyllabicMorphemes = [{
+				type: 'alliteration',//双声
+				words: [{
+					id: 0,
+					word: '乒乓'
+				}, {
+					id: 1,
+					word: '澎湃'
+				}, {
+					id: 2,
+					word: '踌躇'
+				}, {
+					id: 3,
+					word: '犹豫'
+				}]
+			}, {
+				type: 'vowel-rhyme',//叠韵
+				words: [{
+					id: 0,
+					word: '从容'
+				}, {
+					id: 1,
+					word: '葫芦'
+				}, {
+					id: 2,
+					word: '糊涂'
+				}, {
+					id: 3,
+					word: '蜿蜒'
+				}]
+			}, {
+				type: 'compound-word',//联绵词
+				words: [{
+					id: 0,
+					word: '蜈蚣'
+				}, {
+					id: 1,
+					word: '珊瑚'
+				}, {
+					id: 2,
+					word: '奚落'
+				}, {
+					id: 3,
+					word: '蚂螂'
+				}]
+			}, {
+				type: 'loanword',//外来词
+				words: [{
+					id: 0,
+					word: '干部'
+				}, {
+					id: 1,
+					word: '涤纶'
+				}, {
+					id: 2,
+					word: '吉普'
+				}, {
+					id: 3,
+					word: '芭蕾'
+				}]
+			}, {
+				type: 'terminology',//专用名词
+				words: [{
+					id: 0,
+					word: '纽约'
+				}, {
+					id: 1,
+					word: '巴黎'
+				}, {
+					id: 2,
+					word: '北京'
+				}, {
+					id: 3,
+					word: '苏轼'
+				}]
+			}];
+
+			this.PolysyllabicMorphemes = [{
+				type: 'onomatopoetic-word',//拟声词
+				words: [{
+					id: 0,
+					word: '噼里啪啦'
+				}, {
+					id: 1,
+					word: '淅淅沥沥'
+				}]
+			}, {
+				type: 'terminology',//专用名词
+				words: [{
+					id: 0,
+					word: '中华人民共和国'
+				}]
+			}, {
+				type: 'loanword',//外来词
+				words: [{
+					id: 0,
+					word: '安迪斯'
+				}, {
+					id: 1,
+					word: '喜马拉雅'
+				}, {
+					id: 2,
+					word: '法兰克福'
+				}, {
+					id: 3,
+					word: '奥林匹克'
+				}]
+			}];
+
+			this.notionalWord = ['noun', 'verb', 'adj', 'numeral', 'classifier', 'pronoun'];
+			this.notionalWordList = {
+				noun: [{
+					type: 'people',
+					words: [{
+						id: 0,
+						word: '学生'
+					}, {
+						id: 1,
+						word: '群众'
+					}, {
+						id: 2,
+						word: '老头'
+					}, {
+						id: 3,
+						word: '妇女'
+					}, {
+						id: 4,
+						word: '同志'
+					}]
+				}, {
+					type: 'stuff',
+					words: [{
+						id: 0,
+						word: '杉木'
+					}, {
+						id: 1,
+						word: '笔'
+					}, {
+						id: 2,
+						word: '蜗牛'
+					}, {
+						id: 3,
+						word: '猎豹'
+					}, {
+						id: 4,
+						word: '战斗机'
+					}]
+				}],
+
+				verb: [{
+					type: 'behavior',
+					words: [{
+						id: 0,
+						word: '跑'
+					}, {
+						id: 1,
+						word: '唱'
+					}, {
+						id: 2,
+						word: '喝'
+					}, {
+						id: 3,
+						word: '敲'
+					}, {
+						id: 4,
+						word: '盯'
+					}]
+				}, {
+					type: 'develop',//发展动词
+					words: [{
+						id: 0,
+						word: '生长'
+					}, {
+						id: 1,
+						word: '枯萎'
+					}, {
+						id: 2,
+						word: '发芽'
+					}, {
+						id: 3,
+						word: '结果'
+					}, {
+						id: 4,
+						word: '产卵'
+					}]
+				}],
+
+				adj: [{
+					type: 'shape',
+					words: [{
+						id: 0,
+						word: '大'
+					}, {
+						id: 1,
+						word: '高'
+					}, {
+						id: 2,
+						word: '胖'
+					}, {
+						id: 3,
+						word: '细'
+					}, {
+						id: 4,
+						word: '壮'
+					}]
+				}, {
+					type: 'nature',
+					words: [{
+						id: 0,
+						word: '甜'
+					}, {
+						id: 1,
+						word: '好'
+					}, {
+						id: 2,
+						word: '香'
+					}, {
+						id: 3,
+						word: '漂亮'
+					}, {
+						id: 4,
+						word: '机智'
+					}]
+				}, {
+					type: 'state',
+					words: [{
+						id: 0,
+						word: '快'
+					}, {
+						id: 1,
+						word: '浓'
+					}, {
+						id: 2,
+						word: '满'
+					}, {
+						id: 3,
+						word: '多'
+					}, {
+						id: 4,
+						word: '迅速'
+					}]
+				}],
+
+				numeral: [{
+					type: 'exact quantity',//确数
+					words: [{
+						id: 0,
+						word: '1'
+					}, {
+						id: 1,
+						word: '2'
+					}, {
+						id: 2,
+						word: '3'
+					}, {
+						id: 3,
+						word: '一'
+					}, {
+						id: 4,
+						word: '二'
+					}]
+				}, {
+					type: 'approximate number',//概数
+					words: [{
+						id: 0,
+						word: '几'
+					}, {
+						id: 1,
+						word: '一些'
+					}, {
+						id: 2,
+						word: '左右'
+					}, {
+						id: 3,
+						word: '以下'
+					}, {
+						id: 4,
+						word: '余'
+					}]
+				}, {
+					type: 'ordinal',//序数
+					words: [{
+						id: 0,
+						word: '第一'
+					}, {
+						id: 1,
+						word: '第二'
+					}, {
+						id: 2,
+						word: '老大'
+					}, {
+						id: 3,
+						word: '老二'
+					}, {
+						id: 4,
+						word: '初一'
+					}]
+				}],
+
+				classifier: [{    //量词
+					type: 'famous quantifier',
+					words: [{
+						id: 0,
+						word: '尺'
+					}, {
+						id: 1,
+						word: '寸'
+					}, {
+						id: 2,
+						word: '里'
+					}, {
+						id: 3,
+						word: '斤'
+					}, {
+						id: 4,
+						word: '元'
+					}]
+				}, {
+					type: 'momentum word',
+					words: [{
+						id: 0,
+						word: '把'
+					}, {
+						id: 1,
+						word: '次'
+					}, {
+						id: 2,
+						word: '回'
+					}, {
+						id: 3,
+						word: '声'
+					}, {
+						id: 4,
+						word: '幢'
+					}]
+				}],
+
+				pronoun: [{      //代词
+					type: 'personal pronoun',
+					words: [{
+						id: 0,
+						word: '我'
+					}, {
+						id: 1,
+						word: '你'
+					}, {
+						id: 2,
+						word: '他'
+					}, {
+						id: 3,
+						word: '她'
+					}, {
+						id: 4,
+						word: '他们'
+					}]
+				}, {
+					type: 'interrogative pronoun', //疑问代词dem pro
+					words: [{
+						id: 0,
+						word: '谁'
+					}, {
+						id: 1,
+						word: '什么'
+					}, {
+						id: 2,
+						word: '怎么'
+					}, {
+						id: 3,
+						word: '哪里'
+					}, {
+						id: 4,
+						word: '为什么'
+					}]
+				}, {
+					type: 'dem pro', //指示代词
+					words: [{
+						id: 0,
+						word: '这'
+					}, {
+						id: 1,
+						word: '那'
+					}, {
+						id: 2,
+						word: '那里'
+					}, {
+						id: 3,
+						word: '那边'
+					}, {
+						id: 4,
+						word: '哪边'
+					}]
+				}]
+			};
+
+			this.conj = ['adverb', 'preposition', 'conjunction', 'auxiliary word', 'interjection', 'onomatopoetic word'];//虚词
+			this.conjList = {
+				adverb: [{
+					type: 'degree adverb', //程度副词
+					words: [{
+						id: 0,
+						word: '很'
+					}, {
+						id: 1,
+						word: '极'
+					}, {
+						id: 2,
+						word: '非常'
+					}, {
+						id: 3,
+						word: '太'
+					}, {
+						id: 4,
+						word: '过分'
+					}]
+				}, {
+					type: 'time adverb', //时间副词
+					words: [{
+						id: 0,
+						word: '已'
+					}, {
+						id: 1,
+						word: '刚'
+					}, {
+						id: 2,
+						word: '才'
+					}, {
+						id: 3,
+						word: '将'
+					}, {
+						id: 4,
+						word: '要'
+					}]
+				}, {
+					type: 'scope adverb', //范围副词
+					words: [{
+						id: 0,
+						word: '都'
+					}, {
+						id: 1,
+						word: '全'
+					}, {
+						id: 2,
+						word: '总'
+					}, {
+						id: 3,
+						word: '只'
+					}, {
+						id: 4,
+						word: '仅'
+					}]
+				}, {
+					type: 'manner adverb', //情态副词
+					words: [{
+						id: 0,
+						word: '正好'
+					}, {
+						id: 1,
+						word: '果然'
+					}, {
+						id: 2,
+						word: '刚好'
+					}, {
+						id: 3,
+						word: '依然'
+					}, {
+						id: 4,
+						word: '全然'
+					}]
+				}, {
+					type: 'modal adverb', //语气副词
+					words: [{
+						id: 0,
+						word: '准保'
+					}, {
+						id: 1,
+						word: '确实'
+					}, {
+						id: 2,
+						word: '不'
+					}, {
+						id: 3,
+						word: '没有'
+					}, {
+						id: 4,
+						word: '难道'
+					}]
+				}, {
+					type: 'repeated adverb', //重复副词
+					words: [{
+						id: 0,
+						word: '又'
+					}, {
+						id: 1,
+						word: '再'
+					}, {
+						id: 2,
+						word: '还'
+					}, {
+						id: 3,
+						word: '仍'
+					}]
+				}],//副词
+
+				preposition: [{
+					type: 'preposition',
+					words: [{
+						id: 0,
+						word: '从'
+					}, {
+						id: 1,
+						word: '往'
+					}, {
+						id: 2,
+						word: '在'
+					}, {
+						id: 3,
+						word: '当'
+					}, {
+						id: 4,
+						word: '把'
+					}]
+				}],//介词
+
+				conjunction: [{
+					type: 'conjunction',
+					words: [{
+						id: 0,
+						word: '和'
+					}, {
+						id: 1,
+						word: '同'
+					}, {
+						id: 2,
+						word: '跟'
+					}, {
+						id: 3,
+						word: '不但'
+					}, {
+						id: 4,
+						word: '只要'
+					}]
+				}],//连词
+
+				auxiliaryWord: [{
+					type: 'interrogative pronoun',
+					words: [{
+						id: 0,
+						word: '谁'
+					}, {
+						id: 1,
+						word: '什么'
+					}, {
+						id: 2,
+						word: '怎么'
+					}, {
+						id: 3,
+						word: '哪里'
+					}, {
+						id: 4,
+						word: '为什么'
+					}]
+				}, {
+					type: 'dem pro', //指示代词
+					words: [{
+						id: 0,
+						word: '这'
+					}, {
+						id: 1,
+						word: '那'
+					}, {
+						id: 2,
+						word: '那里'
+					}, {
+						id: 3,
+						word: '那边'
+					}, {
+						id: 4,
+						word: '哪边'
+					}]
+				}],//助词
+
+				interjection: [{
+					type: 'interjection',
+					words: [{
+						id: 0,
+						word: '啊'
+					}, {
+						id: 1,
+						word: '哎'
+					}, {
+						id: 2,
+						word: '噢'
+					}, {
+						id: 3,
+						word: '哼'
+					}, {
+						id: 4,
+						word: '呸'
+					}]
+				}],//叹词
+
+				onomatopoeticWord: [{
+					type: 'onomatopoeticWord',
+					words: [{
+						id: 0,
+						word: '哗哗'
+					}, {
+						id: 1,
+						word: '轰隆隆'
+					}, {
+						id: 2,
+						word: '淅淅沥沥'
+					}, {
+						id: 3,
+						word: '咚咚'
+					}, {
+						id: 4,
+						word: '噼里啪啦'
+					}]
+				}]//拟声词
+			}
+
+		}
+
+	</script>
+
+</body>
+</html>
