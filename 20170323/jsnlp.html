@@ -5,12 +5,11 @@
 </head>
 <body>
 
-
-
 	<script type="text/javascript">
 
 		var chineseLanguageProcessing = function(sentence) {
 
+			//单音节语素
 			this.MonosyllabicMorphemes = [{
 				id: 0,
 				word: '土'
@@ -25,6 +24,7 @@
 				word: '风'
 			}];
 
+			//双音节语素
 			this.DisyllabicMorphemes = [{
 				type: 'alliteration',//双声
 				words: [{
@@ -102,6 +102,7 @@
 				}]
 			}];
 
+			//多音节语素
 			this.PolysyllabicMorphemes = [{
 				type: 'onomatopoetic-word',//拟声词
 				words: [{
@@ -134,6 +135,7 @@
 				}]
 			}];
 
+			//实词
 			this.notionalWord = ['noun', 'verb', 'adj', 'numeral', 'classifier', 'pronoun'];
 			this.notionalWordList = {
 				noun: [{
@@ -419,6 +421,7 @@
 				}]
 			};
 
+			//虚词
 			this.conj = ['adverb', 'preposition', 'conjunction', 'auxiliary word', 'interjection', 'onomatopoetic word'];//虚词
 			this.conjList = {
 				adverb: [{
@@ -645,9 +648,171 @@
 						word: '噼里啪啦'
 					}]
 				}]//拟声词
+			};
+
+			this.sentence = sentence;
+			this.wordsList = [];
+
+		}
+
+		chineseLanguageProcessing.prototype = {
+
+			wordStack: [],
+
+			handleSingleWord: function(word) {
+				this.word = word;
+
+				var resultList = [
+					this.handleMonosyllabicMorphemes(),
+					this.handleDisyllabicMorphemes(),
+					this.handlePolysyllabicMorphemes(),
+					this.handleNotionalWordList(),
+					this.handleConjList()
+				];
+
+				for (var i = 0; i < resultList.length; i++) {
+					var result = resultList[i];
+					if(typeof result != 'string') {
+						return result;
+					}
+				};
+
+				return this.word;
+			},
+
+			handleWordStack: function() {
+				this.handleSingleWord(this.wordStack.join(''));
+			},
+
+			process: function() {
+
+				var self = this, result;
+
+				for (var i = 0; i < this.sentence.length; i++) {
+					var word = this.sentence[i];
+					result = self.handleSingleWord(word);
+
+					if(!result) {
+						//判断下一个字符是否在数据结构内
+						self.wordStack.push(word);
+
+						if(i == this.sentence.length - 1) {
+							continue;
+						}
+
+						console.log('continue', this.sentence[i + 1]);
+
+						result = self.handleSingleWord(this.sentence[i + 1]);
+						//如果下一个字符也不存在就连着上一个字符进行查找
+						if(!result) {
+							self.wordStack.push(word);
+							result = self.handleWordStack();
+							if(!result) {
+								//没找到，继续找
+							}else {
+								//如果找到了 就清空
+								self.wordStack = [];
+								self.packWordsList(result, word);
+							}
+						}else {
+							self.packWordsList(result, word);
+						}
+					}else {
+						self.packWordsList(result, word);
+					}
+				};
+
+				return self.wordsList;
+			},
+
+			packWordsList: function(result, word) {
+				this.wordsList.push(result);
+			},
+
+			handleMonosyllabicMorphemes: function() {
+
+				var self = this;
+
+				for (var i = 0; i < self.MonosyllabicMorphemes.length; i++) {
+					var mm = self.MonosyllabicMorphemes[i];
+					if(mm.word == self.word) {
+						return {
+							type: {
+								en: 'MonosyllabicMorphemes',
+								cn: '单音节语素'
+							},
+							word: mm
+						};
+					}
+				};
+
+				return self.word;
+			},
+
+			handleWordType: function(type, wordType) {
+				var self = this;
+
+				var wordTypeTable = {
+					DisyllabicMorphemes: '双音节语素',
+					PolysyllabicMorphemes: '多音节语素',
+					notionalWordList: '实词',
+					conjList: '虚词'
+				}
+
+				for (var i = 0; i < type.length; i++) {
+					var dm = type[i],
+						dmWords = dm.words;
+
+					for (var j = 0; j < dmWords.length; j++) {
+						var dmWord = dmWords[j];
+						if(dmWord.word == self.word) {
+							return {
+								type: {
+									en: wordType,
+									cn: wordTypeTable[wordType]
+								},
+								word: dmWord,
+								wordType: dm.type
+							}
+						}
+					};
+				};
+
+				return self.word;
+			},
+
+			handleDisyllabicMorphemes: function() {
+				return this.handleWordType(this['DisyllabicMorphemes'], 'DisyllabicMorphemes');
+			},
+
+			handlePolysyllabicMorphemes: function() {
+				return this.handleWordType(this['PolysyllabicMorphemes'], 'PolysyllabicMorphemes');
+			},
+
+			handleMultiWordType: function(type) {
+				for(var key in this[type]) {
+					var result = this.handleWordType(this[type][key], type);
+					if(typeof result != 'string') {
+						return result;
+					}
+				}
+				return '';				
+			},
+
+			handleNotionalWordList: function() {
+				return this.handleMultiWordType('notionalWordList');
+			},
+
+			handleConjList: function() {
+				return this.handleMultiWordType('conjList');
 			}
 
 		}
+
+		var clp = new chineseLanguageProcessing('从容土人生水喜马拉雅乒乓跑唱太'),
+			word = clp.process();
+
+		console.log(word);
 
 	</script>
 
