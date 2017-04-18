@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script id="server" type="text/javascript">
+	
+	(function server(params) {
+
+		params = params || {};
+
+		params.outReq = params.outReq || false;
+
+		var ret = {
+			a: 'name'
+		}
+
+		if(params.outReq) {
+			document.write(JSON.stringify(ret));
+		}
+
+		return ret;
+	})({outReq: true})
+
+</script>
+
+</body>
+</html>
