@@ -2,17 +2,56 @@
 <html>
 <head>
 	<title>dup</title>
+
+	<style type="text/css">
+
+  	#demo {
+    	width: 0;
+    	height: 0;
+    	border-width: 1000px;
+    	border-style: solid;
+    	border-color: transparent transparent red transparent;
+  	}
+
+	.magazine {
+		-moz-column-count:3; /* Firefox */
+		-webkit-column-count:3; /* Safari and Chrome */
+		column-count:3;
+		 
+		-moz-column-gap:40px; /* Firefox */
+		-webkit-column-gap:40px; /* Safari and Chrome */
+		column-gap:20px;
+		 
+		-moz-column-rule:4px outset #ff00ff; /* Firefox */
+		-webkit-column-rule:4px outset #ff00ff; /* Safari and Chrome */
+		column-rule:6px outset #ff00ff;
+	}
+
+	</style>
 </head>
 <body>
 
+	<div class="magazine">
+		Your text goes here which you want to divide in to 3 columns.
+
+		<div class="">
+			Your text goes here which you want to divide in to 3 columns.
+		</div>
+
+		<div class="">
+			Your text goes here which you want to divide in to 3 columns.
+		</div>
+
+	</div>
+
 	<script type="text/javascript">
 	
-		Array.prototype.duplicator = function() {
-			console.log(this);
-			// this.push(this);
-		}
+		// Array.prototype.duplicator = function() {
+		// 	console.log(this);
+		// 	// this.push(this);
+		// }
 
-		[1, 2, 3, 4, 5].duplicator();
+		// [1, 2, 3, 4, 5].duplicator();
 
 	</script>
 
