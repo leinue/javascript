@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script type="text/javascript">
+	
+	function foo() {
+		this.bla = 1;
+	}
+
+	foo.prototype.test = function() {
+		console.log(this.bla);
+	}
+
+	var test = new foo();
+
+	test.test();
+
+	function bar() {
+		return 2;
+	}
+
+	var b = new bar();
+	console.log(b.constructor);
+
+	function hh() {
+		this.value = 2;
+
+		return {
+			foo: 1
+		}
+	}
+
+	var t = new hh();
+
+	console.log(t);
+
+	function num() {
+		return new Number(2);
+	}
+
+	console.log(new num().constructor);
+
+</script>
+
+</body>
+</html>
