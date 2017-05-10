@@ -32,8 +32,49 @@
 	//原型式继承
 
 	function ParentPrototype() {
-		this.name = 'xieyang';
+		this.namea = 'xieyang';
 	}
+
+	function subPrototype (o) {
+		function f() {
+			o.call(this);
+		};
+		f.prototype = o.prototype;
+		return new f();
+	}
+
+	var a = subPrototype(Parent);
+
+	console.log(a.say());
+
+	//寄生式
+
+	function create (o) {
+		var f = subPrototype(o);
+		f.run = function() {
+			return this.arr;
+		}
+		return f;
+	}
+
+	//寄生组合式继承
+
+	function inheritPrototype (sub, supera) {
+		var prototype = subPrototype(supera);
+		prototype.constructor = sub;
+		sub.prototype = prototype;
+	}
+
+	function child () {
+
+	}
+
+	inheritPrototype(child, Parent);
+	console.log(child.prototype);
+
+	var test = new child();
+
+	console.log(test.name);
 
 </script>
 
