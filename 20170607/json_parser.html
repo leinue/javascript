@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+		var jsons = '{"title":"Design Patterns","subtitle":"Elements of Reusable Object-Oriented Software","author":["Erich Gamma","Richard Helm","Ralph Johnson","John Vlissides"],"year":2009,"weight":1.8,"hardcover":true,"publisher":"Company","Country":"India","website":null}';
+
+		var parser = function(json) {
+			this.json = json;
+			console.log(JSON.parse(this.json));
+			this.index = 0;
+			this.jsonLength = this.json.length;
+
+			this.struct = {};
+
+			this.keyInfo = {
+				meetKey: false,
+				keyStartPos: 0
+			};
+
+			this.valueInfo = {
+				meetValue: false,
+				valueStartPos: 0
+			};
+
+			this.keyValInfo = {
+				start: false
+			}
+
+			this.tmpKey = '';
+			this.currentKey = '';
+			this.tmpValue = '';
+		}
+
+		parser.prototype = {
+
+			parse: function() {
+
+				for (this.index = 0; this.index < this.jsonLength; this.index++) {
+					var ch = this.json[this.index],
+						ahead = this.lookAhead();
+					switch(ch) {
+						case '{':
+							//进入键
+							if(ahead == '"') {
+								this.keyValInfo.start = true;
+								this.keyInfo.meetKey = true;
+							}
+							break;
+						case '"':
+							if(ahead == ':') {
+								this.keyInfo.meetKey = false;
+								if(this.tmpKey != '') {
+									this.struct[this.tmpKey] = '';
+									this.currentKey = this.tmpKey;
+									this.tmpKey = '';
+									console.log('current key:', this.currentKey);
+								}
+							}else {
+								this.keyInfo.meetKey = true;
+							}
+
+							if(ahead == ',') {
+								//value结束
+
+								if(this.valueInfo.meetValue) {
+									console.log('current value:', this.tmpValue);
+									this.struct[this.currentKey] = this.tmpValue;
+								}								
+
+								this.keyValInfo.meetValue = false;
+								// console.log(this.struct);
+								// console.log('key:', this.currentKey, 'value:', this.tmpValue);
+							}else {
+								// this.keyValInfo.meetValue = false;
+							}					
+
+							break;
+						case ':': 
+							//key搜索结束，进入value
+							if(!this.keyInfo.meetKey) {
+								this.valueInfo.meetValue = true;
+							}
+							break;
+						case '[':
+
+							break;
+						case ']':
+
+							break;
+						case '}':
+
+							break;
+						case ',':
+							this.keyValInfo.start = false;
+							this.keyValInfo.meetValue = false;
+							this.keyInfo.meetKey = true;
+							this.tmpValue = '';
+							this.tmpKey = '';
+							break;
+						case 'n':
+							if(ahead == 'u') {
+								if(this.lookAhead(2) == 'l') {
+									if(this.lookAhead(3) == 'l') {
+										this.valueInfo.meetValue = true;
+										this.tmpValue = null;
+									}
+								} 
+							}
+							break;
+						default:
+
+							if(this.keyInfo.meetKey) {
+								this.tmpKey += ch;
+
+								if(this.valueInfo.meetValue) {
+									console.log('ch=============', ch);
+									this.tmpValue += ch;
+								}else {
+									// console.log('ssss========');
+									// this.tmpValue = '';
+								}
+
+							}else {
+								// this.tmpKey = '';
+							}
+
+							break;
+					}
+
+				};
+
+				return this.struct;
+			},
+
+			nextToken: function () {
+
+			},
+
+			lookAhead: function (step) {
+				step = step || 1;
+				return this.index + step <= this.jsonLength ? this.json[this.index + step] : 'EOF';
+			}
+
+		}
+
+		var p = new parser(jsons);
+
+		console.log(p.parse());
+
+	</script>
+
+</body>
+</html>
