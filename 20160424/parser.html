@@ -148,6 +148,8 @@
 				this.lookAhead = this.lex();
 			}
 
+			console.log(this.lookAhead, token);
+
 			return this.lookAhead == token;
 		}
 
@@ -299,7 +301,7 @@
 
 	};
 
-	lexer.init('1*2+3*4+5*6');
+	lexer.init('1*2+34*4+5*6');
 	lexer.log();
 	parser.statements();
 

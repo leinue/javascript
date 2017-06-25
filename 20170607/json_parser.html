@@ -7,151 +7,308 @@
 <body>
 
 	<script type="text/javascript">
+	//"author":["Erich Gamma","Richard Helm","Ralph Johnson","John Vlissides"]
+		var jsons = '{"title":"Design Patterns","subtitle":"Elements of Reusable Object-Oriented Software","year":2009,"weight":1.8,"hardcover":true,"publisher":"Company","Coutry":"India","website":null}';
 
-		var jsons = '{"title":"Design Patterns","subtitle":"Elements of Reusable Object-Oriented Software","author":["Erich Gamma","Richard Helm","Ralph Johnson","John Vlissides"],"year":2009,"weight":1.8,"hardcover":true,"publisher":"Company","Country":"India","website":null}';
+		var lexer = {
 
-		var parser = function(json) {
-			this.json = json;
-			console.log(JSON.parse(this.json));
-			this.index = 0;
-			this.jsonLength = this.json.length;
+			tokens: {
 
-			this.struct = {};
+				EOI: 0,
 
-			this.keyInfo = {
-				meetKey: false,
-				keyStartPos: 0
-			};
+				BLP: 1, //{
+				BRP: 2, //}
 
-			this.valueInfo = {
-				meetValue: false,
-				valueStartPos: 0
-			};
+				MLP: 3, //[
+				MRP: 4, //]
 
-			this.keyValInfo = {
+				COMMA: 5, //,
+
+				QUO: 6, //"
+
+				COLON: 7, //:
+
+				DOT: 8, //.
+
+				NUMBER: 9,
+
+				OTHER: 10,
+
+				STRING: 11,
+
+				NULL: 12,
+
+				TRUE: 13,
+				FALSE: 14
+
+			},
+
+			jsonValue: {
 				start: false
-			}
+			},
 
-			this.tmpKey = '';
-			this.currentKey = '';
-			this.tmpValue = '';
-		}
+			jsonKey: {
+				start: false,
+				tmp: ''
+			},
 
-		parser.prototype = {
+			object: {},
 
-			parse: function() {
+			ch: '',
+			aheadToken: -1,
 
-				for (this.index = 0; this.index < this.jsonLength; this.index++) {
-					var ch = this.json[this.index],
-						ahead = this.lookAhead();
-					switch(ch) {
-						case '{':
-							//进入键
-							if(ahead == '"') {
-								this.keyValInfo.start = true;
-								this.keyInfo.meetKey = true;
-							}
-							break;
-						case '"':
-							if(ahead == ':') {
-								this.keyInfo.meetKey = false;
-								if(this.tmpKey != '') {
-									this.struct[this.tmpKey] = '';
-									this.currentKey = this.tmpKey;
-									this.tmpKey = '';
-									console.log('current key:', this.currentKey);
+			input_buffer: '',
+
+			parse: function(input) {
+				this.input_buffer = input;
+				console.log(JSON.parse(this.input_buffer));
+
+				while(!this.match(this.tokens.EOI)) {
+					this.advance();
+				}
+
+				console.log(this.object);
+			},
+
+			lex: function(noStep, step) {
+
+				noStep = noStep || false;
+				step = step || 0;
+
+				if(this.input_buffer.length === 0) {
+					return this.tokens.EOI;
+				}
+
+				this.ch = this.input_buffer[step];
+
+				if(!noStep) {
+					this.input_buffer = this.input_buffer.substring(1);
+				}
+
+				switch(this.ch) {
+					case '{':
+						return this.tokens.BLP;
+						break;
+					case '}':
+						return this.tokens.BRP;
+						break;
+					case '[':
+						return this.tokens.MLP;
+						break;
+					case ']':
+						return this.tokens.MRP;
+						break;
+					case '.':
+						return this.tokens.DOT;
+						break;
+					case ',':
+						return this.tokens.COMMA;
+						break;
+					case ':':
+						return this.tokens.COLON;
+						break;
+					case '"':
+						return this.tokens.QUO;
+						break;
+					case 'n':
+						return this.tokens.NULL;
+					case 't':
+						return this.tokens.TRUE;
+					// case 'f':
+					// 	return this.tokens.FALSE;						
+					default:
+
+						//若不是上述token，只能是其它字符了
+
+						if(this.isNum(this.ch)) {
+							return this.tokens.NUMBER;
+						}else {
+							return this.tokens.STRING;
+						}
+
+						return this.tokens.OTHER;
+						break;
+				}
+
+				console.log(this.input_buffer);
+
+			},
+
+			advance: function() {
+				this.ahead = this.lex();
+
+				if(this.ahead == this.tokens.BLP) {
+					this.parseJSONObject();
+				}
+
+				if(this.ahead == this.tokens.MLP) {
+					this.parseArrayObject();
+				}
+
+				if(this.ahead == this.tokens.NUMBER) {
+					this.parseNumberObject();
+				}
+
+				if(this.ahead == this.tokens.COMMA) {
+					this.parseJSONObject();
+				}
+
+				if(this.ahead == this.tokens.NULL) {
+					if(this.next(1) == 'u') {
+						if(this.next(2) == 'l') {
+							if(this.next(3) == 'l') {
+								if(this.next(4) == '}' || this.next(4) == ',') {
+									this.parseNullObject();
 								}
-							}else {
-								this.keyInfo.meetKey = true;
 							}
+						}
+					}
+				}
 
-							if(ahead == ',') {
-								//value结束
+				if(this.ahead == this.tokens.TRUE) {
+					if(this.next(1) == 'r' && 
+						this.next(2) == 'u' && 
+						this.next(3) == 'e' &&
+						(this.next(4) == '}' || this.next(4) == ',')) {
+						this.parseBoolObject(true);
+					}else {
+						this.jsonKey.tmp += 't';
+						this.advance();
+					}
+				}
 
-								if(this.valueInfo.meetValue) {
-									console.log('current value:', this.tmpValue);
-									this.struct[this.currentKey] = this.tmpValue;
-								}								
-
-								this.keyValInfo.meetValue = false;
-								// console.log(this.struct);
-								// console.log('key:', this.currentKey, 'value:', this.tmpValue);
-							}else {
-								// this.keyValInfo.meetValue = false;
-							}					
-
-							break;
-						case ':': 
-							//key搜索结束，进入value
-							if(!this.keyInfo.meetKey) {
-								this.valueInfo.meetValue = true;
-							}
-							break;
-						case '[':
-
-							break;
-						case ']':
-
-							break;
-						case '}':
-
-							break;
-						case ',':
-							this.keyValInfo.start = false;
-							this.keyValInfo.meetValue = false;
-							this.keyInfo.meetKey = true;
-							this.tmpValue = '';
-							this.tmpKey = '';
-							break;
-						case 'n':
-							if(ahead == 'u') {
-								if(this.lookAhead(2) == 'l') {
-									if(this.lookAhead(3) == 'l') {
-										this.valueInfo.meetValue = true;
-										this.tmpValue = null;
+				if(this.ahead == this.tokens.TRUE) {
+					if(this.next(1) == 'a') {
+						if(this.next(2) == 'l') {
+							if(this.next(3) == 's') {
+								if(this.next(4) == 'e') {
+									if(this.next(5) == '}' || this.next(5) == ',') {
+										this.parseBoolObject(false);
 									}
-								} 
-							}
-							break;
-						default:
-
-							if(this.keyInfo.meetKey) {
-								this.tmpKey += ch;
-
-								if(this.valueInfo.meetValue) {
-									console.log('ch=============', ch);
-									this.tmpValue += ch;
-								}else {
-									// console.log('ssss========');
-									// this.tmpValue = '';
 								}
-
-							}else {
-								// this.tmpKey = '';
 							}
+						}
+					}
+				}				
 
-							break;
+			},
+
+			match: function(token, noStep, step) {
+				if(this.ahead == -1) {
+					this.ahead = this.lex();
+				}
+
+				if(noStep) {
+					return this.lex(noStep, step) == token;
+				}
+
+				return this.ahead == token;
+			},
+
+			next: function(step) {
+				return this.input_buffer[step - 1];
+			},
+
+			isNum: function(c) {
+				c = c || this.current;
+
+				return !isNaN(c);
+			},
+
+			isBool: function() {
+
+			},
+
+			isString: function() {
+
+			},
+
+			isNull: function() {
+
+			},
+
+			isUndefined: function() {
+
+			},
+
+			getJSONKey: function(first) {
+				console.log('Key解析结束', this.ch, this.jsonKey.tmp);
+				if(this.match(this.tokens.QUO) || this.match(this.tokens.MLP) || this.match(this.tokens.NUMBER)) {
+					this.advance();
+					this.object[this.jsonKey.tmp] = this.getJSONValue(first || this.ch);
+					this.jsonKey.tmp = '';
+				}
+			},
+
+			getJSONValue: function(tmpCH) {
+				var tmpJSONValue = tmpCH, self = this;
+				if(!self.match(self.tokens.COMMA) && !self.match(self.tokens.QUO)) {
+					self.advance();
+					tmpJSONValue += this.getJSONValue(self.ch);
+					return tmpJSONValue;
+				}
+
+				return '';
+			},
+
+			parseJSONObject: function() {
+				this.advance();
+
+				var self = this;
+
+				if(this.match(this.tokens.COLON)) {
+					//Key解析结束
+					this.advance();
+					if(this.match(this.tokens.NUMBER)) {
+						this.getJSONKey(this.ch);
+					}else {
+						this.getJSONKey();						
+					}
+				}else {
+
+					if(this.match(this.tokens.QUO)) {
+
+						if(this.match(this.tokens.COMMA, true, 2)) {
+							//value解析结束
+							console.log('value解析结束', this.ch);
+						}else {
+							this.parseJSONObject();
+						}
 					}
 
-				};
+					if(this.match(this.tokens.STRING)) {
+						this.jsonKey.tmp += this.ch;
+						this.parseJSONObject();
+					}
 
-				return this.struct;
+				}
+
 			},
 
-			nextToken: function () {
+			parseBoolObject: function(bool) {
+				this.object[this.jsonKey.tmp] = Boolean(bool);
+			},
+
+			parseArrayObject: function() {
 
 			},
 
-			lookAhead: function (step) {
-				step = step || 1;
-				return this.index + step <= this.jsonLength ? this.json[this.index + step] : 'EOF';
+			parseNumberObject: function() {
+				console.log('parseNumberObject', this.jsonKey.tmp);
+				// this.object[this.jsonKey.tmp] = this.ch;
+			},
+
+			parseStringObject: function() {
+
+			},
+
+			parseNullObject: function() {
+				this.object[this.jsonKey.tmp] = null;
 			}
 
 		}
 
-		var p = new parser(jsons);
-
-		console.log(p.parse());
+		lexer.parse(jsons);
 
 	</script>
 
